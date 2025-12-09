@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>SmartHome WebApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+    <div id="auth-view" class="view centered">
+        <div class="card auth-card">
+            <div class="app-title">SmartHome</div>
+            <div class="app-subtitle">
+                Войдите или создайте аккаунт, чтобы управлять домом
+            </div>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="login">Вход</button>
+                <button class="tab-button" data-tab="register">Регистрация</button>
+                <button class="tab-button" data-tab="reset">Сброс пароля</button>
+            </div>
+            <div class="tab-content" id="tab-login">
+                <label class="field">
+                    <span>Логин</span>
+                    <input type="text" id="login-username" />
+                </label>
+
+                <label class="field">
+                    <span>Пароль</span>
+                    <input type="password" id="login-password" />
+                </label>
+
+                <button id="btn-login" class="btn primary">Войти</button>
+            </div>
+            <div class="tab-content hidden" id="tab-register">
+                <label class="field">
+                    <span>Логин</span>
+                    <input type="text" id="reg-username" />
+                </label>
+
+                <label class="field">
+                    <span>Email</span>
+                    <input type="email" id="reg-email" />
+                </label>
+
+                <label class="field">
+                    <span>Пароль</span>
+                    <input type="password" id="reg-password" />
+                </label>
+
+                <label class="field">
+                    <span>Мастер-ключ (для admin, опционально)</span>
+                    <input type="password" id="reg-master-key" />
+                </label>
+
+                <button id="btn-register" class="btn primary">Создать аккаунт</button>
+            </div>
+            <div class="tab-content hidden" id="tab-reset">
+                <div id="reset-step1">
+                    <label class="field">
+                        <span>Email</span>
+                        <input type="email" id="reset-email" />
+                    </label>
+                    <button id="btn-reset-request" class="btn primary">
+                        Отправить код
+                    </button>
+                </div>
+
+                <div id="reset-step2" class="hidden">
+                    <label class="field">
+                        <span>Код из письма</span>
+                        <input type="text" id="reset-code" />
+                    </label>
+
+                    <label class="field">
+                        <span>Новый пароль</span>
+                        <input type="password" id="reset-new-password" />
+                    </label>
+
+                    <button id="btn-reset-confirm" class="btn primary">
+                        Сменить пароль
+                    </button>
+                </div>
+            </div>
+
+            <div id="auth-message" class="message"></div>
+        </div>
+    </div>
+    <div id="main-view" class="view hidden">
+        <header class="topbar">
+            <div class="topbar-left">
+                <div class="logo-circle">🏠</div>
+                <div class="top-title">SmartHome</div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-badge" id="user-badge"></div>
+                <button id="btn-logout" class="btn danger small">Выйти</button>
+            </div>
+        </header>
+        <main class="main-content">
+            <section class="rooms-section">
+                <div class="section-header">
+                    <h2>Комнаты</h2>
+                    <button id="btn-add-room" class="btn outline small">
+                        + Добавить комнату
+                    </button>
+                </div>
+                <div id="rooms-grid" class="rooms-grid">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="room-modal-backdrop" class="backdrop hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="room-modal-title">Комната</h3>
+                <button id="btn-close-room-modal" class="icon-btn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-actions">
+                    <button id="btn-add-device" class="btn outline small">
+                        + Устройство
+                    </button>
+                    <button id="btn-delete-room" class="btn danger small">
+                        Удалить комнату
+                    </button>
+                </div>
+
+                <div id="devices-list" class="devices-list">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+    }
+</script>
+<script src="app.js"></script>
+</body>
+</html>
